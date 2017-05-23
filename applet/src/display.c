@@ -198,8 +198,6 @@ void draw_rx_screen(unsigned int bg_color)
     int nameLen;
     //char *timeSlot[3];
 	int primask = OS_ENTER_CRITICAL(); // for form sake
-//    dst = g_dst;
-//    src = g_src;
 
     dst = rst_dst ;
     src = rst_src ;
@@ -346,7 +344,6 @@ void draw_ta_screen(unsigned int bg_color)
     int grp ;
     
     int primask = OS_ENTER_CRITICAL(); // for form sake
-	int scr_row = RX_POPUP_Y_START;							   
     
     dst = rst_dst ;
     src = rst_src ;
