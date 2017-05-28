@@ -216,12 +216,22 @@ void draw_rx_screen(unsigned int bg_color)
     user_t usr ;
 
     if( usr_find_by_dmrid(&usr,src) == 0 ) {
-        usr.callsign = "ID unknown" ;
-        usr.firstname = "" ;
-        usr.name = "No entry in" ;
-        usr.place = "your users.csv" ;
-        usr.state = "see README.md" ;
-        usr.country = "on Github" ;
+	if( src==4000 ) {
+		usr.callsign = "Message" ;
+           	usr.firstname = "from" ;
+	        usr.name = "Server" ;
+            	usr.place = "" ;
+            	usr.state = "" ;
+            	usr.country = "";
+	}
+	else {
+        	usr.callsign = "ID unknown" ;
+        	usr.firstname = "" ;
+	        usr.name = "No entry in" ;
+	        usr.place = "your users.csv" ;
+	        usr.state = "see README.md" ;
+	        usr.country = "on Github" ;
+	}
     }
 	
     gfx_select_font(gfx_font_small);
