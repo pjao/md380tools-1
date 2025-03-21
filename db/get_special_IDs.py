@@ -19,7 +19,7 @@ except ImportError:
 
 from ssl import SSLError, CertificateError
 
-bm_master = Request("http://registry.dstar.su/api/node.php")
+bm_master = Request("https://api.brandmeister.network/v2/master")
 
 try:
     response = urlopen(bm_master)
@@ -36,15 +36,15 @@ file = open('special.tmp', 'a')
 # file.write('5000,Status,,,,,,\n')
 
 for idx, item in enumerate(data):
-    print(str(idx) + ": ID->" + item['ID'] + " Country->" + item['Country'] + " Address->" + item['Address'])
-    req = Request("http://" + item['Address'] + "/md380tools/special_IDs.csv")
+    print(str(idx) + ": ID->" + str(item['id']) + " Country->" + item['country'] + " Address->" + item['address'])
+    req = Request("http://" + item['address'] + "/md380tools/special_IDs.csv")
     try:
         response = urlopen(req, timeout=20)
     except HTTPError as e:
         # if e.code == 404:
         print("List with special IDs not found!\n")
     except URLError as e:
-        print("Could not talk to master server in " + item['Country'] + "!\n")
+        print("Could not talk to master server in " + item['country'] + "!\n")
     except socket.timeout:
         print("Socket Timeout...\n")
     except SSLError as e:
@@ -60,8 +60,11 @@ for idx, item in enumerate(data):
         except socket.error:
             print("Socket Error...\n")
         else:
+            # Handle servers which answer with an empty file
+            if not content:
+                print("List with special IDs empty!\n")
             # Handle servers which answer with HTTP 200 but give file not found
-            if "DOCTYPE" in content:
+            elif "DOCTYPE" in content:
                 print("List with special IDs not found!\n")
             else:
                 print(content)
